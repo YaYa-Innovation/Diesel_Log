@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Include Font Awesome directly from CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background-color: #f0f5f9; /* Background color */
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background-color: #ffffff; /* Container background color */
+            padding: 25px 30px;
+            border-radius: 5px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .container .title {
+            font-size: 25px;
+            font-weight: 500;
+            position: relative;
+            color: #1a1a1a; /* Title color */
+        }
+
+        .container .title::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 30px;
+            border-radius: 5px;
+            background-color: #00818a; /* Title underline color */
+        }
+
+        .content form .user-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px 0 12px 0;
+        }
+
+        form .user-details .input-box {
+            margin-bottom: 15px;
+            width: calc(100% / 2 - 20px);
+        }
+
+        form .input-box span.details {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #1a1a1a; /* Input label color */
+        }
+
+        .user-details .input-box input {
+            height: 45px;
+            width: 100%;
+            outline: none;
+            font-size: 16px;
+            border-radius: 5px;
+            padding-left: 15px;
+            border: 1px solid #ccc;
+            border-bottom-width: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .user-details .input-box input:focus,
+        .user-details .input-box input:valid {
+            border-color: #00818a; /* Border color on focus or valid */
+        }
+
+        form .gender-details .gender-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: #1a1a1a; /* Gender title color */
+        }
+
+        form .category {
+            display: flex;
+            width: 80%;
+            margin: 14px 0;
+            justify-content: space-between;
+        }
+
+        form .category label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        form .category label .dot {
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background: #808080;
+            border: 5px solid transparent;
+        }
+
+        #dot-1:checked~.category label .one,
+        #dot-2:checked~.category label .two,
+        #dot-3:checked~.category label .three {
+            background: #00818a;
+            border-color: #808080;
+        }
+
+        form input[type="radio"] {
+            display: none;
+        }
+
+        form .button {
+            height: 45px;
+            margin: 35px 0;
+        }
+
+        form .button input {
+            height: 100%;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            color: #ffffff; /* Button text color */
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            background: #00818a; /* Button background color */
+        }
+
+        @media (max-width: 584px) {
+            .container {
+                max-width: 100%;
+            }
+
+            form .user-details .input-box {
+                margin-bottom: 15px;
+                width: 100%;
+            }
+
+            form .category {
+                width: 100%;
+            }
+
+            .content form .user-details {
+                max-height: 300px;
+                overflow-y: scroll;
+            }
+
+            .user-details::-webkit-scrollbar {
+                width: 5px;
+            }
+        }
+
+        @media (max-width: 459px) {
+            .container .content .category {
+                flex-direction: column;
+            }
+        }
+
+        .user-details .input-box select {
+            height: 45px;
+            width: 100%;
+            outline: none;
+            font-size: 16px;
+            border-radius: 5px;
+            padding-left: 15px;
+            border: 1px solid #ccc;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .user-details .input-box select:focus {
+            border-color: #ff7e67; /* Border color on focus */
+        }
+
+        .container {
+            position: relative;
+        }
+
+        .content {
+            position: relative;
+        }
+
+        .person-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            color: #333; /* Icon color */
+        }
+
+        .person-icon:hover {
+            color: #ff7e67; /* Hover color */
+        }
+
+        .additional-form {
+            display: none;
+            margin-top: 20px;
+        }
+        .new-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff; /* Container background color */
+    padding: 25px 30px;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+    </style>
+</head>
+
+<body>
+
+ <div class="main-container" id="mainFormContainer">
+        <div class="container">
+            <div class="title">Your Flask App Title
+                <i class="fas fa-user person-icon"></i>
+            </div>
+            <div class="content">
+                <form class="main-form" id="mainForm">
+
+            <form class="main-form" id="mainForm">
+                <div class="user-details">
+                    <div class="input-box">
+                        <span class="details">Employee Name</span>
+                        <input type="text" placeholder="Enter your name" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Employee Number</span>
+                        <input type="text" placeholder="Enter your employee number" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Date</span>
+                        <input type="text" value="{{ current_date }}" readonly>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Shift</span>
+                        <select>
+                            <option value="day">Day</option>
+                            <option value="full">Full</option>
+                            <option value="half">Half</option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Vehicle Number</span>
+                        <input type="text" placeholder="Enter vehicle number" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Vehicle Name</span>
+                        <input type="text" placeholder="Enter vehicle name" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Initial Reading</span>
+                        <input type="text" id="initialReading" placeholder="Enter initial reading" oninput="calculateResult()" required>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="details">Final Reading</span>
+                        <input type="text" id="finalReading" placeholder="Enter final reading" oninput="calculateResult()" required>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="details">Result</span>
+                        <input type="text" id="result" placeholder="Result" readonly>
+                    </div>
+                </div>
+
+                <div class="button" id="submitButton" style="display: none;">
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+
+            
+            </div>
+        </div>
+
+    </div>
+
+    <button id="loginButton">Login</button>
+<div class="new-container" id="loginContainer" style="display: none;">
+    <div class="new-form-content">
+        <form id="loginForm">
+            <div class="user-details">
+                <div class="input-box">
+                    <span class="details">Username</span>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required oninput="checkUsername()">
+                </div>
+                <div class="input-box">
+                    <span class="details">Age</span>
+                    <input type="text" id="age" name="age" placeholder="Enter your age" >
+                </div>
+            </div>
+            <div class="button" id="submitButton">
+                <input type="submit" value="Login">
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function checkUsername() {
+        var usernameInput = document.getElementById('username');
+        var ageInput = document.getElementById('age');
+        var submitButton = document.getElementById('submitButton');
+
+        // Get the username value
+        var username = usernameInput.value;
+
+        // Make an asynchronous request to the Flask backend
+        fetch('/check_username', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username: username }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Update the age field if a matching age is found
+            if (data.age) {
+                ageInput.value = data.age;
+
+                // Hide the submit button if the age exists
+                submitButton.style.display = 'none';
+            } else {
+                // Clear the age field and show the submit button if no matching age is found
+                ageInput.value = '';
+                submitButton.style.display = 'block';
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+
+
+    <script>
+// Function to toggle the visibility of the main form container
+function toggleMainFormContainer() {
+    var mainFormContainer = document.getElementById('mainFormContainer');
+    mainFormContainer.style.display = mainFormContainer.style.display === 'none' ? 'block' : 'none';
+}
+
+// Function to toggle the visibility of the login form container
+function toggleLoginContainer() {
+    var loginContainer = document.getElementById('loginContainer');
+    loginContainer.style.display = loginContainer.style.display === 'none' ? 'block' : 'none';
+
+    // Hide the main form when the login form is displayed
+    document.getElementById('mainFormContainer').style.display = 'none';
+}
+
+// Function to handle the login submission
+function login(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+
+    // Your login logic here
+
+    // Show the main form after successful login
+    document.getElementById('mainFormContainer').style.display = 'block';
+    // Hide the login form after successful login
+    document.getElementById('loginContainer').style.display = 'none';
+
+    // Clear the login form fields
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
+}
+
+// Add an event listener to the login button to toggle the login form container
+document.getElementById('loginButton').addEventListener('click', toggleLoginContainer);
+
+</script>
+<script>
+        function calculateResult() {
+            // Get initial and final reading values
+            var initialReading = parseFloat(document.getElementById('initialReading').value) || 0;
+            var finalReading = parseFloat(document.getElementById('finalReading').value) || 0;
+
+            // Calculate result and update the result input
+            var result = finalReading - initialReading;
+            document.getElementById('result').value = result.toFixed(2); // Adjust decimal places as needed
+
+            // Show/hide submit button based on result
+            var submitButton = document.getElementById('submitButton');
+            submitButton.style.display = result >= 0 ? 'block' : 'none';
+        }
+    </script>
+</body>
+
+</html>
